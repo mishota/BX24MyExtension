@@ -1,0 +1,46 @@
+.profile-menu-item {
+    position: relative;
+    padding-top: .5rem!important;
+    align-items: center!important;
+    position: relative!important;
+    display: inline-flex!important;    
+    color: #333333;
+    font-weight: 700;
+}
+
+.profile-menu-link {
+    color: #333333;
+    display: flex;
+}
+
+.profile-menu-item:hover {
+    color: #1058d0;
+    text-decoration: none;
+}
+
+.profile-menu-link:hover {
+    color: #1058d0;
+}
+
+.profile-menu-item-active {
+    color: #1058d0;
+    cursor: default!important;
+    border-bottom: #1058d0 2px solid;
+}
+
+.profile-menu-item + .profile-menu-item {
+    margin-left: 10px;
+}
+
+.header-right-buttons > a {
+    display: flex;
+    align-items: center;
+    color: #333333;
+    font-weight: 500;
+    font-size: 15px;
+    padding-bottom: 10px;
+}
+
+.header-right-buttons > a:hover {
+    color: #1058d0;
+}

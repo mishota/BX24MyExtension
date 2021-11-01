@@ -1,0 +1,91 @@
+body { font-family: Roboto, Helvetica, Arial, sans-serif; }
+
+.default-block {
+    background: #FFFFFF;
+    border: 1px solid rgba(99, 99, 115, 0.2);
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.default-block .block-title {
+    font-size: 17px;
+    line-height: 17px;
+}
+
+.default-block.page-title {
+    font-size: 20px;
+}
+
+.default-block .block-title svg {
+    vertical-align: baseline;
+}
+
+.default-block .block-title-value {
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.select-label {
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.form-outline .select-label {
+    position: absolute;
+    top: 0;
+    left: .75rem;
+    padding: 0px 3px;
+    pointer-events: none;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+    color: rgba(0,0,0,.6);
+    margin-bottom: 0;
+    margin-top: .37rem;
+}
+
+.select-label.active {
+    -webkit-transform: translateY(-1rem) translateY(.1rem) scale(.8);
+    transform: translateY(-1rem) translateY(.1rem) scale(.8);
+    background: white;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-move {
+    cursor: move;
+}
+
+.tasks-grid-avatar {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: -3px 5px 0 0;
+    background-size: cover;
+}
+
+.document-history {
+    font-size: smaller;
+}
+
+.document-history-statuses > div {
+    display: inline-block;
+}
+
+.file-drop {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #EEEEEE;
+    padding: 20px 10px;
+    font-size: 15px;
+}
