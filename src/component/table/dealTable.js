@@ -1,10 +1,7 @@
 import { Trans } from "react-i18next";
-import { Link } from "react-router-dom";
-import { DataStorage } from "../../enum/dataStorage";
 import { Rest } from "../../rest";
 import TableComponent from "./tableComponent";
 import Deal from "../../models/deal";
-import { LinkService } from "../../service/linkService";
 
 class DealTable extends TableComponent {
   constructor() {
@@ -16,11 +13,8 @@ class DealTable extends TableComponent {
       "property_link",
       "property_stage",
       "property_opportunity",
-      "property_company",
-      "property_companyId",
       "property_LinkToCompany",
     ];
-    const currentDefinition = this;
 
     this.Header.push({
       text_id: "field-id",
@@ -32,13 +26,19 @@ class DealTable extends TableComponent {
     });
 
     this.Header.push({
-      text_id: "field-event-type",
+      text_id: "field-deal-title",
       field: "property_link",
       getCellObject: function (item) {
-        // const link = LinkService.get(item.ObjectType, item.ObjectId);
         return (
           <td className="align-middle">
-            <a href={item.Link}>
+            {/* <span
+              onClick={() => {
+                Rest.openPath(item.shortLink);
+              }}
+            >
+              <Trans>{item.Name}</Trans>
+            </span> */}
+            <a href={item.Link} target="_blank" rel="noreferrer">
               <Trans>{item.Name}</Trans>
             </a>
           </td>
@@ -49,7 +49,6 @@ class DealTable extends TableComponent {
     this.Header.push({
       text_id: "field-stage",
       field: "property_stage",
-      //sortable: true,
       getCellObject: function (item) {
         return <td className="align-middle">{item.STAGE_ID}</td>;
       },
@@ -63,23 +62,21 @@ class DealTable extends TableComponent {
       },
     });
 
-    // this.Header.push({
-    //   text_id: "field-company-id",
-    //   field: "property_companyId",
-    //   getCellObject: function (item) {
-    //     return <td className="align-middle">{item.CompanyId}</td>;
-    //   },
-    // });
-
     this.Header.push({
-      text_id: "field-linkToCompany",
+      text_id: "field-Company",
       field: "property_LinkToCompany",
       getCellObject: function (item) {
         return (
           <td className="align-middle">
-            <a href={item.LinkToCompany}>
-              <Trans>{item.COMPANY_NAME}</Trans>
-            </a>
+            {item.Company && (
+              <a
+                href={item.Company.LinkToCompany}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Trans>{item.Company.TITLE}</Trans>
+              </a>
+            )}
           </td>
         );
       },
@@ -101,18 +98,22 @@ class DealTable extends TableComponent {
 
     try {
       let mainResult = await Rest.callMethod("crm.deal.list", requestData);
-      let companiesResult = await Rest.callMethod("crm.company.list");
+      let deals = mainResult.items;
+      let companyIds = new Set();
+      deals.forEach((deal) => {
+        companyIds.add(deal.COMPANY_ID);
+      });
+      companyIds = Array.from(companyIds);
 
-      let myItems = mainResult.items;
-      let companies = companiesResult.items;
-      console.warn("companies:", companies);
+      let companies = await Rest.getCompanies(companyIds);
 
-      myItems.forEach((item) => {
-        let company = companies.find((comp) => comp.ID === item.COMPANY_ID);
-        item.COMPANY_NAME = company.TITLE || "not found";
+      deals.forEach((deal) => {
+        if (companies[deal.COMPANY_ID]) {
+          deal.Company = companies[deal.COMPANY_ID];
+        }
       });
 
-      let items = myItems.map((x) => new Deal(x));
+      let items = deals.map((x) => new Deal(x));
 
       currentDefinition.printRows(items, mainResult.total);
     } catch (err) {

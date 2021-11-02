@@ -7,8 +7,7 @@ export default class Deal {
     this.OPPORTUNITY = fields.OPPORTUNITY;
     this.STAGE_ID = fields.STAGE_ID;
     this.COMPANY_ID = fields.COMPANY_ID;
-    this.COMPANY_NAME = fields.COMPANY_NAME;
-    // console.warn("this", this);
+    this.Company = fields.Company;
   }
 
   get Id() {
@@ -29,9 +28,5 @@ export default class Deal {
 
   get CompanyId() {
     return parseInt(this.COMPANY_ID) || 0;
-  }
-
-  get LinkToCompany() {
-    return `https://${Rest.getDomain()}/crm/company/details/${this.CompanyId}/`;
   }
 }

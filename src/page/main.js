@@ -33,10 +33,6 @@ export default class MainPage extends React.Component {
       this.profileInfo = res.items[0].NAME;
       this.setState({ profileName: res.items[0].NAME });
     });
-
-    // Rest.callMethod("crm.deal.list").then((res) => {
-    //   this.deals = res.items;
-    // });
   };
 
   refreshTable = () => {
